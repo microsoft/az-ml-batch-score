@@ -1,0 +1,38 @@
+{
+    "sp_tenant": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+    "sp_client": "7c00c98d-e8b4-4bae-890a-7be7e431ef1c",
+    "sp_secret": "560cc724-eec7-41fe-819b-42665bad9bef",
+    "resource_group_name": "baimm",
+    "subscription_id": "edf507a2-6235-46c5-b560-fd463ba2e771",
+    "aml_work_space": "amlws",
+    "experiment_name": "baimm_score",
+    "cluster_name": "baimmcluster",
+    "location": "eastus",
+    "blob_account": "baimmstorage",
+    "blob_key": "iZNrWSYmCKBPXjmWuNvwqbXBSY8olw9kX73bwDM4emwuWnX/0BJUVuuWv9lhq5K9cjU6mGi+gTyRGT58aBxr3Q==",
+    "models_blob_container": "models",
+    "data_blob_container": "data",
+    "data_blob": "sensor_data.csv",
+    "preds_blob_container": "preds",
+    "pip_packages": [
+        "numpy",
+        "scipy",
+        "scikit-learn",
+        "pandas"
+    ],
+    "python_version": "3.6.7",
+    "python_script_name": "predict.py",
+    "python_script_directory": ".",
+    "device_ids": [
+        1,
+        2,
+        3
+    ],
+    "tags": [
+        1,
+        2,
+        3,
+        4,
+        5
+    ]
+}
