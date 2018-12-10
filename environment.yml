@@ -1,4 +1,4 @@
-name: baimm
+name: amlmm
 channels:
   - conda-forge
 dependencies:
