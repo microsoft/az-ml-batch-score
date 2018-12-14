@@ -48,7 +48,7 @@ Once all prerequisites are installed,
 1. Clone or download this repsitory:
 
     ```
-    git clone https://github.com/Azure/BatchAIAnomalyDetection.git
+    git clone https://github.com/Azure/AMLBatchScoringPipeline.git
     ```
 2. Create and select conda environment from yml file:
         
