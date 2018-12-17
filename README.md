@@ -73,7 +73,7 @@ Start creating the required resources in the next section.
 ### 1. Create Azure Resources
 The [01_create_resources.ipynb](01_create_resources.ipynb) notebook contains all Azure CLI commands needed to create resources in your Azure subscription, as well as configurations of the AML pipeline and the compute target. 
 
-Navigate to the cloned/downloaded directory in Jupyter Notebook: *BatchAIAnomalyDetection/01_create_resources.ipynb*, and start executing the cells to create the needed Azure resources. 
+Navigate to the cloned/downloaded directory in Jupyter Notebook: *AMLBatchScoringPipeline/01_create_resources.ipynb*, and start executing the cells to create the needed Azure resources. 
 
 ### 3. Create and Schedule the Scoring Pipeline
 The [02_create_pipeline.ipynb](02_create_pipeline.ipynb) notebook contains Python code that creates the AML scoring pipeline and schedules it to run on a predefined interval.
