@@ -7,7 +7,5 @@ dependencies:
   - ipykernel  
   - pip:
     - prompt-toolkit==2.0.7
-    - azure-cli==2.0.53
-    - azure==4.0.0
+    - azure-cli==2.0.53    
     - azureml-sdk==1.0.2
- 
