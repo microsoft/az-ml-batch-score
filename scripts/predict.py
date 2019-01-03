@@ -13,17 +13,17 @@ import os
 
 # query params
 device = int(sys.argv[1])
-tag = int(sys.argv[2])
+sensor = int(sys.argv[2])
 models_dir = sys.argv[3]
 data_dir = sys.argv[4]
 data_file_name = sys.argv[5]
 preds_dir = sys.argv[6]
 
-model_name = "model_{0}_{1}".format(device, tag)
+model_name = "model_{0}_{1}".format(device, sensor)
 
 # get data
 data = pd.read_csv(data_dir + "/" + data_file_name)
-data = data[(data["Device"] == device) & (data["Tag"] == tag)]
+data = data[(data["Device"] == device) & (data["Sensor"] == sensor)]
 tss = data["TS"]
 vals = np.array(data["Value"])
 
@@ -42,15 +42,15 @@ res = pd.DataFrame(
     {
         "TS": tss,
         "Device": np.repeat(device, len(preds)),
-        "Tag": np.repeat(tag, len(preds)),
+        "Sensor": np.repeat(sensor, len(preds)),
         "Val": vals,
         "Prediction": preds,
     }
 )
-res = res[["TS", "Device", "Tag", "Val", "Prediction"]]
+res = res[["TS", "Device", "Sensor", "Val", "Prediction"]]
 
 res_file_name = "preds_{0}_{1}_{2}.csv".format(
-    device, tag, datetime.datetime.now().strftime("%y%m%d%H%M%S")
+    device, sensor, datetime.datetime.now().strftime("%y%m%d%H%M%S")
 )
 
 

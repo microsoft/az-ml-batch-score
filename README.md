@@ -6,7 +6,7 @@
 #### Scoring Anomaly Detection Models at Scale using Azure Machine Learning
 In this repository you will find a set of scripts and commands that help you build a scalable solution for scoring many models in parallel using Azure Machine Learning (AML).
 
-The solution can be used as a template and can generalize to different problems. The problem addressed here is monitoring the operation of a large number of devices in an IoT setting, where each device sends sensor readings continuously. We assume there are pre-trained [anomaly detection models](http://scikit-learn.org/stable/modules/outlier_detection.html#outlier-detection) (one for each device). The models are used to predict whether a series of measurements, that are aggregated over a predefined time interval, correspond to an anomaly or not.
+The solution can be used as a template and can generalize to different problems. The problem addressed here is monitoring the operation of a large number of devices in an IoT setting, where each device sends sensor readings continuously. We assume there are pre-trained [anomaly detection models](http://scikit-learn.org/stable/modules/outlier_detection.html#outlier-detection) - one for each sensor of a device. The models are used to predict whether a series of measurements, that are aggregated over a predefined time interval, correspond to an anomaly or not.
 
 To get started, read through the *Design* section, then go through the following sections to create the Python environment, Azure resources, and the scoring pipeline:
 
