@@ -1,3 +1,5 @@
+![](https://dev.azure.com/customai/AMLBatchScoringPipeline/_apis/build/status/Microsoft.AMLBatchScoringPipeline?branchName=master)
+
 ### Author: Said Bleik
 
 # Deploying a Batch Scoring Pipeline for Python Models
