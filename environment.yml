@@ -4,8 +4,10 @@ channels:
 dependencies:
   - python=3.6
   - nb_conda_kernels==2.1.0
-  - ipykernel  
+  - ipykernel
+  - tornado<6
   - pip:
     - prompt-toolkit==2.0.7
-    - azure-cli==2.0.53    
-    - azureml-sdk==1.0.2
+    - nbconvert==5.4.1
+    - azure-cli==2.0.59    
+    - azureml-sdk[notebooks]==1.0.17

@@ -11,7 +11,7 @@ The solution can be used as a template and can generalize to different problems.
 To get started, read through the *Design* section, then go through the following sections to create the Python environment, Azure resources, and the scoring pipeline:
 
 * Design
-* Install Prerequisites
+* Prerequisites
 * Create Environment
 * Steps
     * Create Azure Resources
@@ -35,9 +35,8 @@ In addition, we create a scheduling process using AML to run the pipeline contin
 
 > For more information on these services, check the documentation links provided in the *Links* section. 
 
-## Install Prerequisites
+## Prerequisites
 - [conda 4.5](https://conda.io/docs/user-guide/install/index.html)
-- [jq](https://stedolan.github.io/jq/) - *sudo apt-get install jq*
 
 
 > *All scripts and commands were tested on an Ubuntu 16.04 LTS system.*
@@ -56,12 +55,24 @@ Once all prerequisites are installed,
     conda env create -f environment.yml
     conda activate amlmm    
     ```
-3. Start Jupyter in the same environment:
+3. Login to Azure and select subscription
+    ```
+    az login --use-device-code
+    az account set -s "<subscription name or ID>"
+    ```
+
+4. Retrieve or create service principal (SP) credentials. These will be used in the notebooks for authentication. If you don't have existing credentials, you can create new ones using the *az ad sp create-for-rbac* command which returns an *appId (SP client ID)* and a *password (SP secret)*.
+    ```
+    az ad sp create-for-rbac
+    ```   
+
+   For more information on service principals, check the documentation [here](https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli?view=azure-cli-latest).
+5. Start Jupyter in the same environment:
     
     ```
     jupyter notebook
     ```
-4. Open Jupyter Notebook in your browser and select the environemnt kernel in the menu: 
+6. Open Jupyter Notebook in your browser and make sure your environemnt's kernel is selected: 
 
     ```
     Kernel > Change Kernel > Python [conda env:amlmm]
