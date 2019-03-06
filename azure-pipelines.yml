@@ -23,6 +23,25 @@ jobs:
       conda env list  
       echo Login Azure Account
       az login -t $(sptenent) --service-principal -u $(spidentity) --password $(spsecret)
-#      papermill 01_Data_Prep.ipynb 01_Data_Prep_Output.ipynb --log-output --no-progress-bar -k python3 
-    displayName: 'Initial Step'
+    displayName: 'Configuration'
   
+  - bash: |
+      source /usr/share/miniconda/etc/profile.d/conda.sh
+      conda activate amlmm
+      echo Execute 01_create_resources.ipynb
+      papermill 01_create_resources.ipynb 01_create_resources_Output.ipynb --log-output --no-progress-bar -k python3 -p SUBSCRIPTION_NAME  $(subscriptionname) -p RESOURCE_GROUP $(azurergname) -p LOCATION $(azurelocation)
+    displayName: '01_create_resources.ipynb'
+
+  - bash: |
+      source /usr/share/miniconda/etc/profile.d/conda.sh
+      conda activate amlmm
+      echo Execute 02_create_pipeline.ipynb
+      papermill 02_create_pipeline.ipynb 02_create_pipeline_Output.ipynb --log-output --no-progress-bar -k python3 
+    displayName: '02_create_pipeline.ipynb'
+
+  - bash: |
+      source /usr/share/miniconda/etc/profile.d/conda.sh
+      conda activate amlmm
+      echo Execute Resource Group Delete
+      az group delete --name $(azurergname)
+    displayName: 'Cleanup'
