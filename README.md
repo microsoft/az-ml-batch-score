@@ -61,18 +61,12 @@ Once all prerequisites are installed,
     az account set -s "<subscription name or ID>"
     ```
 
-4. Retrieve or create service principal (SP) credentials. These will be used in the notebooks for authentication. If you don't have existing credentials, you can create new ones using the *az ad sp create-for-rbac* command which returns an *appId (SP client ID)* and a *password (SP secret)*.
-    ```
-    az ad sp create-for-rbac
-    ```   
-
-   For more information on service principals, check the documentation [here](https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli?view=azure-cli-latest).
-5. Start Jupyter in the same environment:
+4. Start Jupyter in the same environment:
     
     ```
     jupyter notebook
     ```
-6. Open Jupyter Notebook in your browser and make sure your environemnt's kernel is selected: 
+5. Open Jupyter Notebook in your browser and make sure your environemnt's kernel is selected: 
 
     ```
     Kernel > Change Kernel > Python [conda env:amlmm]
