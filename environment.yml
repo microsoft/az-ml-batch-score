@@ -11,3 +11,5 @@ dependencies:
     - nbconvert==5.4.1
     - azure-cli==2.0.59    
     - azureml-sdk[notebooks]==1.0.17
+    - papermill
+
