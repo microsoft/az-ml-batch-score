@@ -43,5 +43,5 @@ jobs:
       source /usr/share/miniconda/etc/profile.d/conda.sh
       conda activate amlmm
       echo Execute Resource Group Delete
-      az group delete --name $(azurergname)
+      az group delete --name $(azurergname) --yes
     displayName: 'Cleanup'
