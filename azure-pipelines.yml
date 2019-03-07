@@ -27,7 +27,7 @@ jobs:
           az group delete --name $(azurergname) --yes
         else
           echo Resource group did not exist $(azurergname)
-
+        fi
     displayName: 'Dummy Step'
 
 
