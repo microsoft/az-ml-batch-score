@@ -46,5 +46,9 @@ jobs:
       source /usr/share/miniconda/etc/profile.d/conda.sh
       conda activate amlmm
       echo Execute Resource Group Delete
-      az group delete --name $(azurergname) --yes
+      existResponse =  az group exists -n $(azurergname)
+      if [[ "$existResponse" == *true* ]]; then
+        echo Deleting resource group $(azurergname) 
+        az group delete --name $(azurergname) --yes
     displayName: 'Cleanup'
+    condition: or(canceled,failed)
