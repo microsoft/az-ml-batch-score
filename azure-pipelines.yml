@@ -24,7 +24,7 @@ jobs:
       existResponse=$(az group exists -n $(azurergname))
       rgname=$(azurergname)
       echo Looking for $rgname and got response $existResponse
-        if [ "$existResponse" == *true* ]; then
+        if [ "$existResponse" == "true" ]; then
           echo Deleting resource group $(azurergname) 
           az group delete --name $(azurergname) --yes
         else
