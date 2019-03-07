@@ -43,10 +43,11 @@ jobs:
     displayName: '02_create_pipeline.ipynb'
 
   - bash: |
+      #!/bin/bash
       source /usr/share/miniconda/etc/profile.d/conda.sh
       conda activate amlmm
       echo Execute Resource Group Delete
-      declare existResponse =  az group exists -n $(azurergname)
+      existResponse=(az group exists -n $(azurergname))
       if [[ "$existResponse" == *true* ]]; then
         echo Deleting resource group $(azurergname) 
         az group delete --name $(azurergname) --yes
