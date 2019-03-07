@@ -22,7 +22,9 @@ jobs:
       echo Login Azure Account
       az login -t $(sptenent) --service-principal -u $(spidentity) --password $(spsecret)
       existResponse=(az group exists -n $(azurergname))
-        if [[ "$existResponse" == *true* ]]; then
+      rgname=$(azurergname)
+      echo Looking for $rgname and got response $existResponse
+        if [ "$existResponse" == *true* ]; then
           echo Deleting resource group $(azurergname) 
           az group delete --name $(azurergname) --yes
         else
