@@ -27,6 +27,12 @@ jobs:
       echo Login Azure Account
       az login -t $(sptenent) --service-principal -u $(spidentity) --password $(spsecret)
     displayName: 'Configuration'
+
+  - bash: |
+      source /usr/share/miniconda/etc/profile.d/conda.sh
+      conda activate amlmm
+      echo Kill the process now
+    displayName: 'Dummy Step'
   
   - bash: |
       source /usr/share/miniconda/etc/profile.d/conda.sh
@@ -43,7 +49,6 @@ jobs:
     displayName: '02_create_pipeline.ipynb'
 
   - bash: |
-      #!/bin/bash
       source /usr/share/miniconda/etc/profile.d/conda.sh
       conda activate amlmm
       echo Execute Resource Group Delete
