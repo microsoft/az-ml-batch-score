@@ -51,4 +51,4 @@ jobs:
         echo Deleting resource group $(azurergname) 
         az group delete --name $(azurergname) --yes
     displayName: 'Cleanup'
-    condition: or(canceled,failed)
+    condition: or(canceled(),failed())
