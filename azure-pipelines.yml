@@ -21,7 +21,7 @@ jobs:
       source /usr/share/miniconda/etc/profile.d/conda.sh
       echo Login Azure Account
       az login -t $(sptenent) --service-principal -u $(spidentity) --password $(spsecret)
-      existResponse=(az group exists -n $(azurergname))
+      existResponse=$(az group exists -n $(azurergname))
       rgname=$(azurergname)
       echo Looking for $rgname and got response $existResponse
         if [ "$existResponse" == *true* ]; then
