@@ -19,22 +19,6 @@ jobs:
   steps:
   - bash: |
       source /usr/share/miniconda/etc/profile.d/conda.sh
-      echo Login Azure Account
-      az login -t $(sptenent) --service-principal -u $(spidentity) --password $(spsecret)
-      existResponse=$(az group exists -n $(azurergname))
-      rgname=$(azurergname)
-      echo Looking for $rgname and got response $existResponse
-        if [ "$existResponse" == "true" ]; then
-          echo Deleting resource group $(azurergname) 
-          az group delete --name $(azurergname) --yes
-        else
-          echo Resource group did not exist $(azurergname)
-        fi
-    displayName: 'Dummy Step'
-
-
-  - bash: |
-      source /usr/share/miniconda/etc/profile.d/conda.sh
       which conda
       conda env create -f environment.yml
       conda env list
@@ -62,12 +46,13 @@ jobs:
       source /usr/share/miniconda/etc/profile.d/conda.sh
       conda activate amlmm
       echo Execute Resource Group Delete
-      existResponse=(az group exists -n $(azurergname))
-      if [[ "$existResponse" == *true* ]]; then
+      existResponse=$(az group exists -n $(azurergname))
+      if [ "$existResponse" == "true" ]; then
         echo Deleting resource group $(azurergname) 
         az group delete --name $(azurergname) --yes
       else
         echo Resource group did not exist $(azurergname)
+      fi
       echo Done Cleanup
     displayName: 'Cleanup'
-    condition: or(canceled(),failed())
+    condition: always()
