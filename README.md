@@ -103,6 +103,7 @@ az group delete --name <resource_group_name>
 - [End-to-End Anomaly Detection Jobs using Azure Batch AI](https://github.com/saidbleik/batchai_mm_ad)
 - [Azure Machine Learning Documentation](https://docs.microsoft.com/en-us/azure/machine-learning/)
 - [Azure Blob Storage Documentation](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction)
+- [Distributing inference across many compute nodes using ParallelRunStep](https://aka.ms/batch-inference-notebooks)
 
 ## Contributing
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
