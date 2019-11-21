@@ -1,71 +1,90 @@
-# AMLBatchScoringPipeline Pipeline 
+# MLAKSDeploy Pipeline
+resources:
+  repositories:
+    - repository: aitemplates
+      type: github
+      name: microsoft/AI
+      endpoint: AIArchitecturesAndPractices-GitHub
+
+variables:
+  BuildConfiguration: Release
+  BuildBinariesDirectory: $(Build.BinariesDirectory)
+  BuildPlatform: any cpu
+  DotNetCoreBuildVersion: 2.2.108
+  DotNetRuntimeTarget: ubuntu.18.04-x64
+  AgentToolsDirectory: $(Agent.ToolsDirectory)
+  CloudPlatform: AzureCloud
+  ProductName: Trident
+  TridentWorkloadType: $(WorkloadType)
+  TridentWorkloadTypeShort: $(WorkloadTypeShort)
+  DeployLocations: eastus
+  Agent: agce-ai
+  azureSubscription: AG-AzureCAT-AIDevOps-Test-COGSNonProd-IO1685734(0ca618d2-22a8-413a-96d0-0f1b531129c3)
+  azure_subscription: 0ca618d2-22a8-413a-96d0-0f1b531129c3
 
 trigger:
   batch: true
   branches:
     include:
     - master
-    
-variables:
-- group: AzureKeyVault
 
 jobs:
-- job: AMLBatchScoringPipelineJob
-  timeoutInMinutes: 300
-  cancelTimeoutInMinutes: 2
-  pool:
-    vmImage: 'Ubuntu-16.04'
+- job: build_deploy_ai
+  displayName: 'Build deploy AI'
+
+  strategy:
+    maxParallel: 8
+    matrix: $[ dependencies.build_relayer_sources.outputs['GenDeployMatrix.DeployRegions'] ]
+  timeoutInMinutes: 180
+
+  workspace:
+    clean: all
+
+  variables:
+    DeploymentGuidTag: $[ dependencies.build_relayer_sources.outputs['GenDeployGuidTag.DeploymentGuid'] ]
+    DeploymentTimeStamp: $[ dependencies.build_relayer_sources.outputs['GenDeployTimeStamp.timeStamp'] ]
+    EnvironmentPrefix: $(TridentWorkloadType)-$(CloudPlatform)-$(DeployLocation)$(TestPostfix)
+    ResourcePrefix: $(TridentWorkloadTypeShort)-$(DeployLocation)$(TestPostfix)
+    EnvironmentContext: $(EnvironmentPrefix)-$(DeploymentGuidTag)
+    AIResourceGroupName: $(TridentWorkloadTypeShort)-$(DeployLocation)$(TestPostfix)
 
   steps:
-  - bash: |
-      source /usr/share/miniconda/etc/profile.d/conda.sh
-      which conda
-      conda env create -f environment.yml
-      conda env list
-      conda activate amlmm
-      conda env list  
-      echo Login Azure Account
-      az login -t $(sptenent) --service-principal -u $(spidentity) --password $(spsecret)
-    displayName: 'Configuration'
-  
-  - bash: |
-      source /usr/share/miniconda/etc/profile.d/conda.sh
-      conda activate amlmm
-      echo Execute 01_create_resources.ipynb
-      papermill 01_create_resources.ipynb 01_create_resources_Output.ipynb --log-output --no-progress-bar -k python3 -p SUBSCRIPTION_NAME  $(subscriptionname) -p RESOURCE_GROUP $(azurergname) -p LOCATION $(azurelocation)
-    displayName: '01_create_resources.ipynb'
+
+  #
+  # DL Workload Deployment
+  #
+    # use the ML team templates to build and deploy workloads for each region
+  - script: |
+      docker stop $(docker ps -a -q)
+      docker rm $(docker ps -a -q)
+      docker system prune -a -f
+      rm -rf AI
+      git clone --recurse-submodules https://github.com/microsoft/AI.git
+    displayName: 'git clone sources'
 
   - bash: |
-      source /usr/share/miniconda/etc/profile.d/conda.sh
-      conda activate amlmm
-      echo Execute 02_create_pipeline.ipynb
-      papermill 02_create_pipeline.ipynb 02_create_pipeline_Output.ipynb --log-output --no-progress-bar -k python3 
-    displayName: '02_create_pipeline.ipynb'
+      Deploy_Location_Short=$(echo $DeployLocation | cut -c1-12)
+      echo "##vso[task.setvariable variable=Deploy_Location_Short]$Deploy_Location_Short"
 
-  - bash: |
-      source /usr/share/miniconda/etc/profile.d/conda.sh
-      conda activate amlmm
-      echo Execute Resource Group Delete
-      existResponse=$(az group exists -n $(azurergname))
-      if [ "$existResponse" == "true" ]; then
-        echo Deleting resource group $(azurergname) 
-        az group delete --name $(azurergname) --yes
-      else
-        echo Resource group did not exist $(azurergname)
-      fi
-      echo Done Cleanup
-    displayName: 'Cleanup'
-    condition: always()
 
-  - task: CreateWorkItem@1
-    inputs:
-      workItemType: 'Issue'
-      title: $(System.TeamProject) - Build $(Build.BuildNumber) Failed
-      assignedTo: 'Katherine Lin <katlin@microsoft.com>'
-      associate: true
-      teamProject: $(System.TeamProject)
-    
-      fieldMappings: |
-        Description=Branch: Branch $(Build.SourceBranch) failed to build. Go to Boards>WorkItems and tag the failure type.
-    displayName: 'Create work item on failure'
-    condition: failed()    
+  - template: .ci/steps/deploy_steps.yml@aitemplates
+    parameters:
+      deployment_name: MLBatchDeployAMLJob
+      template: MLBatchDeployAMLJob.yml
+      azureSubscription: $(azureSubscription)
+      azure_subscription: $(azure_subscription)
+      azureresourcegroup: $(AIResourceGroupName)
+      workspacename: $(TridentWorkloadTypeShort)-$(DeployLocation)
+      azureregion: $(DeployLocation)
+      aksimagename: myimage
+      environment: $(EnvironmentContext)
+      doCleanup: False
+      alias: $(Build.QueuedBy)
+      project: $(TridentWorkloadTypeShort)
+      agent: "Hosted Ubuntu 1604"
+      ENVIRONMENT_PREFIX: $(EnvironmentPrefix)
+      deploymentguidtag: $(DeploymentGuidTag)
+      aks_name: $(TridentWorkloadTypeShort)$(Deploy_Location_Short)
+      python_path: "$(System.DefaultWorkingDirectory)/AI/submodules/DeployMLModelPipelines"
+      location: AI/submodules/DeployMLModelPipelines
+      python_secret_root: "./AI/"
