@@ -18,11 +18,13 @@ variables:
   TridentWorkloadType: $(WorkloadType)
   TridentWorkloadTypeShort: $(WorkloadTypeShort)
   DeployLocation: eastus
-  Agent: agce-ai
   azureSubscription: AG-AzureCAT-AIDevOps-Test-COGSNonProd-IO1685734(0ca618d2-22a8-413a-96d0-0f1b531129c3)
   azure_subscription: 0ca618d2-22a8-413a-96d0-0f1b531129c3
   WorkloadTypeShort: aimlbat
   TestPostfix: t
+  GitHubName: DeployMLModelPipelines
+  Template: MLBatchDeployAMLJob.yml
+  DeploymentName: MLBatchDeployAMLJob
 
 trigger:
   batch: true
@@ -34,9 +36,6 @@ jobs:
 - job: build_deploy_ai
   displayName: 'Build deploy AI'
 
-  strategy:
-    maxParallel: 8
-    matrix: $[ dependencies.build_relayer_sources.outputs['GenDeployMatrix.DeployRegions'] ]
   timeoutInMinutes: 180
 
   workspace:
@@ -52,10 +51,6 @@ jobs:
 
   steps:
 
-  #
-  # DL Workload Deployment
-  #
-    # use the ML team templates to build and deploy workloads for each region
   - script: |
       docker stop $(docker ps -a -q)
       docker rm $(docker ps -a -q)
@@ -68,11 +63,10 @@ jobs:
       Deploy_Location_Short=$(echo $DeployLocation | cut -c1-12)
       echo "##vso[task.setvariable variable=Deploy_Location_Short]$Deploy_Location_Short"
 
-
   - template: .ci/steps/deploy_steps.yml@aitemplates
     parameters:
-      deployment_name: MLBatchDeployAMLJob
-      template: MLBatchDeployAMLJob.yml
+      deployment_name: $(DeploymentName)
+      template: $(Template)
       azureSubscription: $(azureSubscription)
       azure_subscription: $(azure_subscription)
       azureresourcegroup: $(AIResourceGroupName)
@@ -87,6 +81,6 @@ jobs:
       ENVIRONMENT_PREFIX: $(EnvironmentPrefix)
       deploymentguidtag: $(DeploymentGuidTag)
       aks_name: $(TridentWorkloadTypeShort)$(Deploy_Location_Short)
-      python_path: "$(System.DefaultWorkingDirectory)/AI/submodules/DeployMLModelPipelines"
-      location: AI/submodules/DeployMLModelPipelines
+      python_path: "$(System.DefaultWorkingDirectory)/AI/submodules/$(GitHubName)"
+      location: AI/submodules/$(GitHubName)
       python_secret_root: "./AI/"
