@@ -35,9 +35,7 @@ jobs:
 
   variables:
     DeploymentGuidTag: $[ dependencies.build_relayer_sources.outputs['GenDeployGuidTag.DeploymentGuid'] ]
-    DeploymentTimeStamp: $[ dependencies.build_relayer_sources.outputs['GenDeployTimeStamp.timeStamp'] ]
     EnvironmentPrefix: $(TridentWorkloadType)-$(CloudPlatform)-$(DeployLocation)$(TestPostfix)
-    ResourcePrefix: $(TridentWorkloadTypeShort)-$(DeployLocation)$(TestPostfix)
     EnvironmentContext: $(EnvironmentPrefix)-$(DeploymentGuidTag)
     AIResourceGroupName: $(TridentWorkloadTypeShort)-$(DeployLocation)$(TestPostfix)
 
