@@ -79,7 +79,7 @@ jobs:
       deploymentguidtag: $(DeploymentGuidTag)
       aks_name: $(TridentWorkloadTypeShort)$(Deploy_Location_Short)
       python_path: "$(System.DefaultWorkingDirectory)"
-      location: ""
+      location: "."
       python_secret_root: "./"
 
   - script: |
