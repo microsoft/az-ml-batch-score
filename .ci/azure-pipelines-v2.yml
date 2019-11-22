@@ -54,9 +54,7 @@ jobs:
       docker stop $(docker ps -a -q)
       docker rm $(docker ps -a -q)
       docker system prune -a -f
-      rm -rf AI
-      git clone --recurse-submodules https://github.com/microsoft/AI.git
-    displayName: 'git clone sources'
+    displayName: 'Docker Configuration'
 
   - bash: |
       Deploy_Location_Short=$(echo $DeployLocation | cut -c1-12)
@@ -80,6 +78,22 @@ jobs:
       ENVIRONMENT_PREFIX: $(EnvironmentPrefix)
       deploymentguidtag: $(DeploymentGuidTag)
       aks_name: $(TridentWorkloadTypeShort)$(Deploy_Location_Short)
-      python_path: "$(System.DefaultWorkingDirectory)/AI/submodules/$(GitHubName)"
-      location: AI/submodules/$(GitHubName)
-      python_secret_root: "./AI/"
+      python_path: "$(System.DefaultWorkingDirectory)$(GitHubName)"
+      location: $(GitHubName)
+      python_secret_root: "./"
+
+  - script: |
+      rm -rf AI
+      git clone https://github.com/microsoft/AI.git
+      cd AI/ai200-architectures
+      git submodule init DeployMLModelPipelines
+      git submodule update
+      cd DeployMLModelPipelines
+      git pull origin master
+      cd ..
+      git add DeployMLModelPipelines
+      git commit -m "Updating submodule pointer to DeployMLModelPipelines"
+      git pull
+      git push
+
+    displayName: 'Update Submodule pointer'
