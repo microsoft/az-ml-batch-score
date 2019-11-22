@@ -24,6 +24,7 @@ variables:
   TestPostfix: ""
   GitHubName: DeployMLModelPipelines
   DeploymentName: MLBatchDeployAMLJob
+  Template: "MLBatchDeployAMLJob.yml"
 
 trigger:
   batch: true
@@ -60,7 +61,7 @@ jobs:
   - template: .ci/steps/deploy_notebook_steps.yml@aitemplates
     parameters:
       deployment_name: $(DeploymentName)
-      template: "MLBatchDeployAMLJob.yml"
+      template: $(Template)
       azureSubscription: $(azureSubscription)
       azure_subscription: $(azure_subscription)
       azureresourcegroup: $(AIResourceGroupName)
