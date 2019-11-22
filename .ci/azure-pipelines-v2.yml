@@ -21,6 +21,8 @@ variables:
   Agent: agce-ai
   azureSubscription: AG-AzureCAT-AIDevOps-Test-COGSNonProd-IO1685734(0ca618d2-22a8-413a-96d0-0f1b531129c3)
   azure_subscription: 0ca618d2-22a8-413a-96d0-0f1b531129c3
+  WorkloadTypeShort: aimlbat
+  TestPostfix: t
 
 trigger:
   batch: true
