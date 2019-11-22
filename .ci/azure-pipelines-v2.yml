@@ -78,8 +78,8 @@ jobs:
       ENVIRONMENT_PREFIX: $(EnvironmentPrefix)
       deploymentguidtag: $(DeploymentGuidTag)
       aks_name: $(TridentWorkloadTypeShort)$(Deploy_Location_Short)
-      python_path: "$(System.DefaultWorkingDirectory)$(GitHubName)"
-      location: $(GitHubName)
+      python_path: "$(System.DefaultWorkingDirectory)"
+      location: ""
       python_secret_root: "./"
 
   - script: |
