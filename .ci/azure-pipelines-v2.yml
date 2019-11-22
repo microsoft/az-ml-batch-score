@@ -78,19 +78,3 @@ jobs:
       python_path: "$(System.DefaultWorkingDirectory)"
       location: "."
       python_secret_root: "./"
-
-  - script: |
-      rm -rf AI
-      git clone https://github.com/microsoft/AI.git
-      cd AI/ai200-architectures
-      git submodule init DeployMLModelPipelines
-      git submodule update
-      cd DeployMLModelPipelines
-      git pull origin master
-      cd ..
-      git add DeployMLModelPipelines
-      git commit -m "Updating submodule pointer to DeployMLModelPipelines"
-      git pull
-      git push
-
-    displayName: 'Update Submodule pointer'
