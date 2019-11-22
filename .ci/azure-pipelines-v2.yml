@@ -47,7 +47,6 @@ jobs:
     ResourcePrefix: $(TridentWorkloadTypeShort)-$(DeployLocation)$(TestPostfix)
     EnvironmentContext: $(EnvironmentPrefix)-$(DeploymentGuidTag)
     AIResourceGroupName: $(TridentWorkloadTypeShort)-$(DeployLocation)$(TestPostfix)
-    Template: "MLBatchDeployAMLJob.yml"
 
   steps:
 
@@ -61,7 +60,7 @@ jobs:
   - template: .ci/steps/deploy_notebook_steps.yml@aitemplates
     parameters:
       deployment_name: $(DeploymentName)
-      template: $(Template)
+      template: MLBatchDeployAMLJob.yml
       azureSubscription: $(azureSubscription)
       azure_subscription: $(azure_subscription)
       azureresourcegroup: $(AIResourceGroupName)
