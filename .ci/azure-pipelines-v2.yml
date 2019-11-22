@@ -50,15 +50,12 @@ jobs:
 
   steps:
 
-  - script: |
-      docker stop $(docker ps -a -q)
-      docker rm $(docker ps -a -q)
-      docker system prune -a -f
-    displayName: 'Docker Configuration'
+  - template: .ci/steps/docker_clean.yml@aitemplates
 
-  - bash: |
-      Deploy_Location_Short=$(echo $DeployLocation | cut -c1-12)
-      echo "##vso[task.setvariable variable=Deploy_Location_Short]$Deploy_Location_Short"
+  - template: .ci/steps/shorten_string.yml@aitemplates
+    parameters:
+      Input_String: $($DeployLocation)
+      Output_Variable: Deploy_Location_Short
 
   - template: .ci/steps/deploy_steps.yml@aitemplates
     parameters:
