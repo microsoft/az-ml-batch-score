@@ -29,6 +29,66 @@ trigger:
     - master
 
 jobs:
+- job: build_relayer_sources
+  displayName: 'Build Trident Server Sources'
+
+  pool:
+    name: $(AgentPoolName)
+
+  workspace:
+    clean: all
+
+  steps:
+    - template: TridentServer/yaml-templates/azure-pipeline-build-template.yml
+      parameters:
+        ProjectBasePath: $(RelayerBasePath)
+        BuildConfiguration: $(BuildConfiguration)
+        BuildBinariesDirectory: $(BuildBinariesDirectory)
+        BuildPlatform: $(BuildPlatform)
+        DotNetCoreBuildVersion: $(DotNetCoreBuildVersion)
+        DotNetRuntimeTarget: $(DotNetRuntimeTarget)
+        WorkerRolePrefix: relayer-
+        AgentToolsDirectory: $(AgentToolsDirectory)
+
+    # Get the artifacts saved during build to be used for this deployment steps
+    - task: DownloadBuildArtifacts@0
+      displayName: 'Download ConfigService Artifacts'
+      inputs:
+        artifactName: configService
+        downloadPath: $(System.DefaultWorkingDirectory)
+
+    # Generate a deployment guid that uniquely identifies this deployment
+    - task: PowerShell@2
+      displayName: 'PowerShell Script - Generate deployment GUID'
+      name: 'GenDeployGuidTag'
+      inputs:
+        targetType: filePath
+        workingDirectory: '$(System.DefaultWorkingDirectory)'
+        filePath: './configService/DeploymentScripts/GenerateDeploymentGuid.ps1'
+
+    # Generate Start Deployment Time Stamp
+    - task: PowerShell@2
+      displayName: 'PowerShell Script - Generate deployment time stamp'
+      name: 'GenDeployTimeStamp'
+      inputs:
+        targetType: filePath
+        workingDirectory: '$(System.DefaultWorkingDirectory)'
+        filePath: './configService/DeploymentScripts/GenerateDeploymentTimestamp.ps1'
+
+ 
+    # To generate the proper format to deployto multiple regions from yaml the
+    # comma separated list of regions needs to be converted to specific json
+    # format. Details here:
+    # https://docs.microsoft.com/en-us/azure/devops/pipelines/process/phases?view=azure-devops&tabs=yaml#multi-configuration
+    - task: PowerShell@2
+      displayName: 'PowerShell Script - Generate deployment location matrix'
+      name: 'GenDeployMatrix'
+      inputs:
+        targetType: filePath
+        workingDirectory: '$(System.DefaultWorkingDirectory)'
+        filePath: './configService/DeploymentScripts/GenerateRegionalDeploymentMatrix.ps1'
+        arguments: '-DeployLocations ''$(DeployLocations)'''
+
 - job: build_deploy_ai
   displayName: 'Build deploy AI'
 
