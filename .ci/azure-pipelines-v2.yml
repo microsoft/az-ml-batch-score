@@ -23,7 +23,6 @@ variables:
   WorkloadTypeShort: aimlbat
   TestPostfix: t
   GitHubName: DeployMLModelPipelines
-  Template: MLBatchDeployAMLJob.yml
   DeploymentName: MLBatchDeployAMLJob
 
 trigger:
@@ -66,7 +65,7 @@ jobs:
   - template: .ci/steps/deploy_steps.yml@aitemplates
     parameters:
       deployment_name: $(DeploymentName)
-      template: $(Template)
+      template: "MLBatchDeployAMLJob.yml"
       azureSubscription: $(azureSubscription)
       azure_subscription: $(azure_subscription)
       azureresourcegroup: $(AIResourceGroupName)
