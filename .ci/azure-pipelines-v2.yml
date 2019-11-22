@@ -53,7 +53,7 @@ jobs:
   - template: .ci/steps/deploy_notebook_steps.yml@aitemplates
     parameters:
       deployment_name: $(DeploymentName)
-      template: MLBatchDeployAMLJobv2.yml
+      template: MLBatchDeployAMLJob.yml
       azureSubscription: $(azureSubscription)
       azure_subscription: $(azure_subscription)
       azureresourcegroup: $(AIResourceGroupName)
