@@ -7,10 +7,12 @@ dependencies:
   - ipykernel
   - tornado<6
   - urllib3==1.23
+  - pip
   - pip:
     - prompt-toolkit==2.0.7
     - nbconvert==5.4.1
     - azure-cli==2.0.59    
     - azureml-sdk[notebooks]==1.0.17
     - papermill==0.19.1
+    - python-dotenv
 

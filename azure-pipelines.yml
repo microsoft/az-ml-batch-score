@@ -32,7 +32,7 @@ jobs:
       source /usr/share/miniconda/etc/profile.d/conda.sh
       conda activate amlmm
       echo Execute 01_create_resources.ipynb
-      papermill 01_create_resources.ipynb 01_create_resources_Output.ipynb --log-output --no-progress-bar -k python3 -p SUBSCRIPTION_NAME  $(subscriptionname) -p resource_group $(azurergname) -p LOCATION $(azurelocation)
+      papermill 01_create_resources.ipynb 01_create_resources_Output.ipynb --log-output --no-progress-bar -k python3 -p subscription_id  $(subscriptionname) -p resource_group $(azurergname) -p workspace_region $(azurelocation)
     displayName: '01_create_resources.ipynb'
 
   - bash: |
