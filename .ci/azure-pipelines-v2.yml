@@ -15,6 +15,8 @@ variables:
   azure_subscription: 0ca618d2-22a8-413a-96d0-0f1b531129c3
   TestPostfix: ""
   DeploymentName: MLBatchDeployAMLJob
+  PythonPath: ""
+  Agent: "Hosted Ubuntu 1604"
 
 # In additional to the above variables, the "template" parameter of the last step must also be hard coded for each workload
 
@@ -62,10 +64,10 @@ jobs:
       doCleanup: False
       alias: $(Build.QueuedBy)
       project: $(TridentWorkloadTypeShort)
-      agent: "Hosted Ubuntu 1604"
+      agent: $(Agent)
       ENVIRONMENT_PREFIX: $(EnvironmentPrefix)
       deploymentguidtag: $(DeploymentGuidTag)
       aks_name: $(TridentWorkloadTypeShort)$(Deploy_Location_Short)
-      python_path: "$(System.DefaultWorkingDirectory)"
+      python_path: $(System.DefaultWorkingDirectory)$(PythonPath)
       location: "."
       python_secret_root: "./"
