@@ -15,5 +15,5 @@ dependencies:
     - azureml-sdk[notebooks]==1.0.17
     - papermill==0.19.1
     - python-dotenv
-    - azure-storage-blob
+    - azure-storage-blob==12.0.0
 
