@@ -38,7 +38,9 @@ In addition, we create a scheduling process using AML to run the pipeline contin
 > For more information on these services, check the documentation links provided in the *Links* section. 
 
 ## Prerequisites
+- Ubuntu
 - [conda 4.5](https://conda.io/docs/user-guide/install/index.html)
+- [jq](https://github.com/jmespath/jp)
 
 
 > *All scripts and commands were tested on an Ubuntu 16.04 LTS system.*
