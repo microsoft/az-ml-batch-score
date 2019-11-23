@@ -27,7 +27,7 @@ To get started, read through the *Design* section, then go through the following
 This solution consists of several Azure cloud services that allow upscaling and downscaling resources according to need. The services and their role in this solution are described below.
 
 ### Blob Storage
-Blob containers are used to store the pre-trained models, the data, and the output predictions. The models that we upload to blob storage in the [*01_create_resources.ipynb*](01_create_resources.ipynb) notebook are [One-class SVM](http://scikit-learn.org/stable/modules/generated/sklearn.svm.OneClassSVM.html) models that are trained on data that represents values of different sensors of different devices. We assume that the data values are aggregated over a fixed interval of time. In real-world scenarios, this could be a stream of sensor readings that need to be filtered and aggregated before being used in training or real-time scoring. For simplicity, we use the same data file when executing scoring jobs.
+Blob containers are used to store the pre-trained models, the data, and the output predictions. The models that we upload to blob storage in the [*01_create_resources.ipynb*](01_DataPrep.ipynb) notebook are [One-class SVM](http://scikit-learn.org/stable/modules/generated/sklearn.svm.OneClassSVM.html) models that are trained on data that represents values of different sensors of different devices. We assume that the data values are aggregated over a fixed interval of time. In real-world scenarios, this could be a stream of sensor readings that need to be filtered and aggregated before being used in training or real-time scoring. For simplicity, we use the same data file when executing scoring jobs.
 
 ### Azure Machine Learning
 Azure Machine Learning (AML) is a cloud service that allows training, scoring, managing, and deploying machine learning models at scale in the cloud. It can be used to execute training, scoring, or other demanding jobs on remote compute targets, such as a cluster of virtual machines, that can scale according to need. In this solution guide, we use AML to run scoring jobs for many sensors in parallel. We do that by creating an AML pipeline with parallel steps, where each step executes a scoring Python [script](scripts/predict.py) for each sensor. AML manages queueing and executing the steps on a scalable compute target.
@@ -80,7 +80,7 @@ Start creating the required resources in the next section.
 
 ## Steps
 ### 1. Create Azure Resources
-The [01_create_resources.ipynb](01_create_resources.ipynb) notebook contains all Azure CLI commands needed to create resources in your Azure subscription, as well as configurations of the AML pipeline and the compute target. 
+The [01_create_resources.ipynb](01_DataPrep.ipynb) notebook contains all Azure CLI commands needed to create resources in your Azure subscription, as well as configurations of the AML pipeline and the compute target. 
 
 Navigate to the cloned/downloaded directory in Jupyter Notebook: *AMLBatchScoringPipeline/01_create_resources.ipynb*, and start executing the cells to create the needed Azure resources. 
 

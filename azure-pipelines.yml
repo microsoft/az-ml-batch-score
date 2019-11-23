@@ -40,7 +40,7 @@ jobs:
       conda activate amlmm
       echo Execute 01_DataPrep.ipynb
       papermill 01_DataPrep.ipynb 01_DataPrep.ipynb --log-output --no-progress-bar -k python3 -p subscription_id  $(subscriptionname) -p resource_group $(azurergname) -p workspace_region $(azurelocation)
-    displayName: '01_create_resources.ipynb'
+    displayName: '01_DataPrep.ipynb'
 
   - bash: |
       source /usr/share/miniconda/etc/profile.d/conda.sh
