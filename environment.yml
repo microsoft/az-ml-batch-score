@@ -3,17 +3,17 @@ channels:
   - conda-forge
 dependencies:
   - python=3.6
+  - pip
   - nb_conda_kernels==2.1.0
   - ipykernel
   - tornado<6
   - urllib3==1.23
   - pip
   - pip:
-    - prompt-toolkit==2.0.7
-    - nbconvert==5.4.1
-    - azure-cli==2.0.59    
-    - azureml-sdk[notebooks]==1.0.17
-    - papermill==0.19.1
-    - python-dotenv
+    - azure-cli==2.0.63
+    - azureml-sdk[notebooks]==1.0.57
     - azure-storage-blob==12.0.0
-
+    - nbconvert==5.4.1                
+    - papermill==0.19.1
+    - prompt-toolkit>=2.0.7
+    - python-dotenv
