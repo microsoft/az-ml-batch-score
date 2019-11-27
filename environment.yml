@@ -4,16 +4,16 @@ channels:
 dependencies:
   - python=3.6
   - pip
-  - nb_conda_kernels==2.1.0
+  - nb_conda_kernels
   - ipykernel
   - tornado<6
-  - urllib3==1.23
+  - urllib3
   - pip
   - pip:
-    - azure-cli==2.0.77
-    - azureml-sdk[notebooks]==1.0.76
+    - azure-cli
+    - azureml-sdk[notebooks]
     - azure-storage-blob==12.0.0
-    - nbconvert==5.4.1                
-    - papermill==0.19.1
-    - prompt-toolkit>=2.0.7
+    - nbconvert
+    - papermill
+    - prompt-toolkit
     - python-dotenv
