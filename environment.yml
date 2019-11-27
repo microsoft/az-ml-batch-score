@@ -7,7 +7,6 @@ dependencies:
   - nb_conda_kernels
   - papermill
   - pip
-  - prompt-toolkit
   - python-dotenv
   - pip:
     - azure-cli
