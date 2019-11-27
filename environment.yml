@@ -11,7 +11,7 @@ dependencies:
   - pip
   - pip:
     - azure-cli
-    - azureml-sdk[notebooks]
+    - azureml-sdk[notebooks]==1.0.17
     - azure-storage-blob==12.0.0
     - nbconvert
     - papermill
