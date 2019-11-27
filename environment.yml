@@ -10,8 +10,8 @@ dependencies:
   - urllib3==1.23
   - pip
   - pip:
-    - azure-cli==2.0.63
-    - azureml-sdk[notebooks]==1.0.57
+    - azure-cli==2.0.77
+    - azureml-sdk[notebooks]==1.0.76
     - azure-storage-blob==12.0.0
     - nbconvert==5.4.1                
     - papermill==0.19.1
