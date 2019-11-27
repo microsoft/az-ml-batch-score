@@ -9,7 +9,7 @@ resources:
       name: microsoft/AI
       endpoint: AIArchitecturesAndPractices-GitHub
 
-trigger: None
+trigger: none
 
 pr:
   autoCancel: true
