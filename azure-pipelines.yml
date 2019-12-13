@@ -32,7 +32,7 @@ jobs:
       source /usr/share/miniconda/etc/profile.d/conda.sh
       conda activate amlmm
       echo Execute 00_AMLConfiguration.ipynb
-      papermill 00_AMLConfiguration.ipynb 00_AMLConfiguration_Output.ipynb --log-output --no-progress-bar -k python3 -p subscription_id  $(subscriptionname) -p resource_group $(azurergname) -p workspace_region $(azurelocation) -p workspace_name amlsws
+      papermill 00_AMLConfiguration.ipynb 00_AMLConfiguration_Output.ipynb --log-output --no-progress-bar -k python3 -p subscription_id  $(subscriptionid) -p resource_group $(azurergname) -p workspace_region $(azurelocation) -p workspace_name amlsws
     displayName: '00_AMLConfiguration.ipynb'
 
   - bash: |
