@@ -21,6 +21,7 @@ pr:
 stages:
 - template: .ci/stages/deploy_notebooks_stages_v2.yml@aitemplates
   parameters:
+    Agent: $(Agent_Name)
     jobDisplayName: MLBatchDeployAMLJob
     DefaultWorkingDirectory: $(System.DefaultWorkingDirectory)
     workload_vars: ../vars/ml_batch_scoring.yml
