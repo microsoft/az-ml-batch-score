@@ -6,9 +6,9 @@ dependencies:
   - ipykernel
   - nb_conda_kernels
   - papermill
-  - pip
-  - python-dotenv
+  - pip  
   - pip:
     - azure-cli
     - azureml-sdk[notebooks]==1.0.17
     - azure-storage-blob==12.0.0   
+    - python-dotenv
