@@ -13,9 +13,14 @@ jobs:
 - job: AMLBatchScoringPipelineJob
   timeoutInMinutes: 300
   cancelTimeoutInMinutes: 2
+
   pool:
     vmImage: 'Ubuntu-16.04'
 
+  strategy:
+    maxParallel: 3
+    matrix: {"east": {"azurelocation": "eastus"},"southcentral": {"azurelocation": "southcentralus"},"west": {"azurelocation": "westus2"}}
+  
   steps:
   - bash: |
       source /usr/share/miniconda/etc/profile.d/conda.sh
